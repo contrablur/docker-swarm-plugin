@@ -2,6 +2,7 @@ package org.jenkinsci.plugins.docker.swarm;
 
 import hudson.Extension;
 import hudson.model.Computer;
+import hudson.model.Label;
 import hudson.model.Node;
 import hudson.model.Queue;
 import hudson.model.queue.QueueListener;
@@ -16,7 +17,8 @@ public class OneShotProvisionQueueListener extends QueueListener {
     public void onEnterBuildable(final Queue.BuildableItem bi) {
         final Queue.Task job = bi.task;
         final List<String> labels = DockerSwarmCloud.get().getLabels();
-        if (job.getAssignedLabel() != null && labels.contains(job.getAssignedLabel().getName())) {
+        // if (job.getAssignedLabel() != null && labels.contains(job.getAssignedLabel().getName())) {
+        if (job.getAssignedLabel() != null && job.getAssignedLabel().matches(Label.parse(String.join(" ", labels)))) {
             BuildScheduler.scheduleBuild(bi);
         }
     }
