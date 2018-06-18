@@ -82,7 +82,7 @@ public class DockerSwarmComputerLauncher extends JNLPLauncher {
     }
 
     private void setRestartAttemptCount(ServiceSpec crReq) {
-        crReq.TaskTemplate.setRestartAttemptCount(500);
+        crReq.TaskTemplate.setRestartAttemptCount(3);
     }
 
     private void setLabels(ServiceSpec crReq) {
@@ -116,7 +116,7 @@ public class DockerSwarmComputerLauncher extends JNLPLauncher {
     private void setCacheDirs(DockerSwarmCloud configuration, DockerSwarmAgentTemplate dockerSwarmAgentTemplate, TaskListener listener, DockerSwarmComputer computer, ServiceSpec crReq) {
         final String[] cacheDirs = dockerSwarmAgentTemplate.getCacheDirs();
         if (cacheDirs.length > 0) {
-            final String cacheVolumeName = getJobName() + "-" + computer.getVolumeName();
+            final String cacheVolumeName = getJobName().replace("#", "") + "-" + computer.getVolumeName();
             this.bi.getAction(DockerSwarmAgentInfo.class).setCacheVolumeName(cacheVolumeName);
             for (int i = 0; i < cacheDirs.length; i++) {
                 listener.getLogger().println("Binding Volume" + cacheDirs[i] + " to " + cacheVolumeName);
