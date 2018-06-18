@@ -25,7 +25,7 @@ public class DockerSwarmAgent extends AbstractCloudSlave implements EphemeralNod
     private static final Logger LOGGER = Logger.getLogger(DockerSwarmAgent.class.getName());
 
     public DockerSwarmAgent(final Queue.BuildableItem bi, final String labelString) throws Descriptor.FormException, IOException {
-        super(labelString, "Docker swarm agent for building " + bi.task.getFullDisplayName(),
+        super("dockerswarm", "Docker swarm agent for building " + bi.task.getFullDisplayName(),
                 "/home/jenkins", 1, Mode.EXCLUSIVE, labelString,
                 new DockerSwarmComputerLauncher(bi),
                 new DockerSwarmAgentRetentionStrategy(1),

@@ -48,9 +48,9 @@ public class DockerSwarmComputerLauncher extends JNLPLauncher {
             System.arraycopy(envVarOptions, 0, envVars, 0, envVarOptions.length);
         }
 
-        final String additionalAgentOptions = "-noReconnect -workDir /tmp -noCertificateCheck  ";
+        final String additionalAgentOptions = "-noReconnect -workDir /tmp -noCertificateCheck ";
         final String agentOptions = "-jnlpUrl " + getAgentJnlpUrl(computer, configuration) + " -secret " + getAgentSecret(computer) + " " + additionalAgentOptions;
-        final String[] command = new String[]{"sh", "-cx", "curl --connect-timeout 20  --max-time 60 -o slave.jar " + getAgentJarUrl(configuration) + " && java -jar slave.jar " + agentOptions};
+        final String[] command = new String[]{"sh", "-cx", "curl --connect-timeout 20  --max-time 60 -o slave.jar " + getAgentJarUrl(configuration) + " && java -jar slave.jar  " + agentOptions};
         launchContainer(command,configuration, envVars, dockerSwarmAgentTemplate, listener, computer);
     }
 
